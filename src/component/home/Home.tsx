@@ -11,7 +11,7 @@ export function Home() {
     // const dispatch = useAppDispatch()
     const noteList = useAppSelector(state => state.note)
 
-    // console.log(noteList)
+    console.log(noteList)
 
     return (
         <List sx={mainListBox}>
@@ -41,7 +41,7 @@ export function Home() {
                     >
                     </ListItemText>
                     <ListItemButton sx={{flexGrow:'0', p:'0'}}>
-                        <DeleteNote></DeleteNote>
+                        <DeleteNote id={el.id}></DeleteNote>
                     </ListItemButton>
                 </ListItem>
 

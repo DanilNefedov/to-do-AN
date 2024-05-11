@@ -49,9 +49,9 @@ export const theme = createTheme({
         },
         error: {
             main: '#FF7269',
-            // light: "#ffc2b3",
+            light: "#ffc2b3",
             contrastText: '#FBFBFB',
-            // dark: '#A5514F',
+            dark: '#A5514F',
         },
         // greyBtn:{
         //   main:'#fff',
@@ -65,6 +65,9 @@ export const theme = createTheme({
         //     dark: '#A29415',
         //     contrastText: '#8E94A4',
         // },
+        info:{
+            main:'#FBFBFB'
+        }
     },
 
    
