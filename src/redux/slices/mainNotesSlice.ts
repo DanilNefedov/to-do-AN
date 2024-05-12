@@ -1,18 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { MainNote, NoteMainSlice } from "../types-redux";
 import notes from "../../api/notes";
-import { initializeState } from "./editNotesSLice";
 
 
 const initialState: NoteMainSlice = {
     status: false,
     error: false,
     notes: [
-        // {
-        //     id:'',
-        //     note_header:'',
-        //     note_body:''
-        // }
     ]
 
 }
@@ -45,7 +39,6 @@ export const deleteNotesFetch = createAsyncThunk<string, string, { rejectValue: 
             if (response.status !== 200) {
                 return rejectWithValue('Server Error!');
             }
-            console.log(response.data, response, id)
             return id;
             
         } catch (error) {
@@ -56,28 +49,6 @@ export const deleteNotesFetch = createAsyncThunk<string, string, { rejectValue: 
 );
 
 
-export const newNoteFetch = createAsyncThunk<MainNote, MainNote, { rejectValue: string }>(
-    'notes/newNoteFetch',
-    async function (data, { rejectWithValue, dispatch }) {
-        try {   
-            
-            const response = await notes.post('/notes',
-                data
-            );
-            // console.log(response.status)
-            if (response.status !== 201) {
-                return rejectWithValue('Server Error!');
-            }
-            // console.log(response.data, response, data)
-            // dispatch(initializeState())
-            return response.data;
-            
-        } catch (error) {
-            console.error(error);
-            return rejectWithValue('An unexpected error occurred.');
-        }
-    }
-);
 
 
 
@@ -87,6 +58,9 @@ const noteSlice = createSlice({
     name: 'notes',
     initialState,
     reducers: {
+        resetError:(state) => {
+            state.error = false
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -129,7 +103,12 @@ const noteSlice = createSlice({
                 state.status = false;
                 state.error = true;
             })
+
     }
 });
+
+
+export const { resetError } = noteSlice.actions;
+
 
 export default noteSlice.reducer;

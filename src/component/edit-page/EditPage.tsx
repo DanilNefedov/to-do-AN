@@ -1,17 +1,16 @@
-import { Box, Button, Container, FormControl, FormHelperText, Input, InputLabel, TextField, styled } from "@mui/material";
-import { containerForm, formControl, formSection } from "./styles";
+import { Box, Button, Container, FormControl, FormHelperText} from "@mui/material";
+import { boxBtns, containerForm, formControl, formSection } from "./styles";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Field, Form, Formik } from "formik";
-import { MainNote } from "../../redux/types-redux";
-import { newNoteFetch } from "../../redux/slices/mainNotesSlice";
 import { v4 as uuidv4 } from 'uuid';
-import { changeNote, initializeState } from "../../redux/slices/editNotesSLice";
+import { changeNote, newNoteFetch } from "../../redux/slices/editNotesSLice";
+import { useNavigate } from "react-router-dom";
 
 
 interface valueData {
-    note_header:string,
-    note_body:string
+    note_header: string,
+    note_body: string
 }
 
 
@@ -24,7 +23,14 @@ export function EditPage() {
         note_header,
         note_body,
     }
-   
+
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        if (editNoteData.error) {
+            return navigate("*");
+        }
+    }, [editNoteData.error]);
 
 
     function validateValue(value: string) {
@@ -33,17 +39,16 @@ export function EditPage() {
         }
     }
 
-    console.log(init)
 
-    function newNote(values:valueData){
+    function newNote(values: valueData) {
         const data = {
-            id:id === '' ? uuidv4() : id,
-            note_header:values.note_header,
-            note_body:values.note_body
+            id: id === '' ? uuidv4() : id,
+            note_header: values.note_header,
+            note_body: values.note_body
         }
-        if(id === ''){
+        if (id === '') {
             dispatch(newNoteFetch(data))
-        }else{
+        } else {
             dispatch(changeNote(data))
         }
     }
@@ -85,16 +90,19 @@ export function EditPage() {
                             <FormHelperText component='span' id="my-helper-text">Enter a description of the note.</FormHelperText>
 
                         </FormControl>
-                        <Box sx={{ maxWidth: '350px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                            <Button variant="contained" type="reset" onClick={() => resetForm({values:{note_header, note_body, id}})} >Clean</Button>
+                        <Box sx={boxBtns}>
+                            <Button variant="contained" type="reset" onClick={() => resetForm({ values: { note_header, note_body, id } })} >Clean</Button>
                             <Button variant="contained" type="submit">New Note</Button>
                         </Box>
+
 
                     </Container>
 
                 </Box>
+
+
             )}
         </Formik>
-        
+
     )
 }

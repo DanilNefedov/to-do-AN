@@ -1,11 +1,11 @@
 
 
 export const containerNavigation = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'center',
     height: '100%',
-    backgroundColor: 'background.default',
+    // backgroundColor: 'background.default',
     p:'0!important',
 }
 
@@ -28,4 +28,14 @@ export const btnNavigation = {
     '&.active:hover':{
         backgroundColor:'primary.dark'
     }
+}
+
+
+export const boxDivider = {  
+    overflow:"hidden", 
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column', 
+    height: '100%', 
+    backgroundColor: 'background.default' 
 }

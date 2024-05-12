@@ -1,33 +1,40 @@
-import { List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
-// import { v4 as uuidv4 } from 'uuid';
+import { Alert, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { listItem, mainListBox } from "./style";
 import { DeleteNote } from "./DeleteNote";
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import { resetError } from "../../redux/slices/mainNotesSlice";
 
 
 export function Home() {
-    // const id = uuidv4()
-    // const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
     const noteList = useAppSelector(state => state.note)
 
-    console.log(noteList)
+
+    useEffect(() => {
+        if (noteList.error) {
+            setTimeout(() => {
+                dispatch(resetError());
+            }, 2500); 
+        }
+    }, [noteList.error]);
 
     return (
         <List sx={mainListBox}>
             {noteList.notes.map(el => (
                 <ListItem key={el.id} alignItems="flex-start" sx={listItem}>
                     <ListItemText
-                        sx={{flexGrow:'1'}}
+                        sx={{ flexGrow: '1' }}
                         primary={
-                        <Typography
-                            to={`/edit/${el.id}`}
-                            sx={{width:'fit-content', display:'block'}}
-                            component={NavLink}
-                            color="text.primary"
-                        >
-                            {el.note_header}
-                        </Typography>}
+                            <Typography
+                                to={`/edit/${el.id}`}
+                                sx={{ width: 'fit-content', display: 'block' }}
+                                component={NavLink}
+                                color="text.primary"
+                            >
+                                {el.note_header}
+                            </Typography>}
                         secondary={
                             <Typography
                                 sx={{ display: 'inline', color: 'text.secondary' }}
@@ -40,7 +47,7 @@ export function Home() {
                         }
                     >
                     </ListItemText>
-                    <ListItemButton sx={{flexGrow:'0', p:'0'}}>
+                    <ListItemButton sx={{ flexGrow: '0', p: '0', minWidth:'34px' }}>
                         <DeleteNote id={el.id}></DeleteNote>
                     </ListItemButton>
                 </ListItem>
@@ -48,6 +55,13 @@ export function Home() {
 
             ))}
 
+            {noteList.error ?
+                <Alert variant="filled" severity="error" sx={{position:'absolute', top:'10px', right:'50%'}}>
+                    Oops! Deletion error
+                </Alert>
+                :
+                <></>
+            }
         </List>
     )
 }

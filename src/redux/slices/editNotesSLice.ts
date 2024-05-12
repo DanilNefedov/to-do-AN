@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { EditNotes, MainNote, NoteMainSlice } from "../types-redux";
+import { EditNotes, MainNote } from "../types-redux";
 import notes from "../../api/notes";
 
 
@@ -24,7 +24,7 @@ export const fetchEditNotes = createAsyncThunk<MainNote, string, { rejectValue: 
                 return null
             }
 
-            const response = await notes.get(`notes/${url}`);
+            const response = await notes.get(`notes/${url}`);  
 
             if (response.status !== 200) {
                 return rejectWithValue('Server Error!');
@@ -45,6 +45,7 @@ export const changeNote = createAsyncThunk<MainNote, MainNote, { rejectValue: st
             const response = await notes.patch(`/notes/${data.id}`,
                 data
             );
+           
             if (response.status !== 200) {
                 return rejectWithValue('Server Error!');
             }
@@ -59,6 +60,28 @@ export const changeNote = createAsyncThunk<MainNote, MainNote, { rejectValue: st
 
 
 
+export const newNoteFetch = createAsyncThunk<void, MainNote, { rejectValue: string }>(
+    'notesEdit/newNoteFetch',
+    async function (data, { rejectWithValue }) {
+        try {   
+            
+            const response = await notes.post('/notes',
+                data
+            );
+            if (response.status !== 201) {
+                return rejectWithValue('Server Error!');
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue('An unexpected error occurred.');
+        }
+    }
+);
+
+
+
+
 
 const noteEditSlice = createSlice({
     name: 'notesEdit',
@@ -67,18 +90,9 @@ const noteEditSlice = createSlice({
         initializeState: (state) => {
             return initialState;
         },
-
-        // cleanFormRed: (state, action: PayloadAction<string>) => {
-        //     const id = action.payload;
-        //     console.log(state.notes)
-        //     // state.notes.map(el => {
-        //     //     if(el.id === id){
-        //     //         el.note_header = '';
-        //     //         el.note_body = '';
-        //     //     }
-        //     // })
-            
-        // }
+        resetErrorEdit:(state) => {
+            state.error = false
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -122,6 +136,6 @@ const noteEditSlice = createSlice({
             })
     }
 });
-export const { initializeState } = noteEditSlice.actions;
+export const { initializeState, resetErrorEdit } = noteEditSlice.actions;
 
 export default noteEditSlice.reducer;

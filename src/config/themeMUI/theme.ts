@@ -1,25 +1,4 @@
-import { createTheme, outlinedInputClasses } from '@mui/material';
-
-
-// Augment the palette to include an ochre color
-declare module '@mui/material/styles' {
-    interface Palette {
-        ochre: Palette['primary'];
-        // greyBtn: Palette['primary'];
-    }
-
-    interface PaletteOptions {
-        ochre?: PaletteOptions['primary'];
-        // greyBtn?: PaletteOptions['primary'];
-    }
-}
-
-// Update the Button's color options to include an ochre option
-declare module '@mui/material/Button' {
-    interface ButtonPropsColorOverrides {
-        ochre: true;
-    }
-}
+import { createTheme } from '@mui/material';
 
 
 
@@ -53,18 +32,7 @@ export const theme = createTheme({
             contrastText: '#FBFBFB',
             dark: '#A5514F',
         },
-        // greyBtn:{
-        //   main:'#fff',
-        //   light:'#B24F49',
-        //   dark:'#1F2128',
-        //   contrastText:'#fff'
-        // },
-        // ochre: {
-        //     main: '#1F2128',
-        //     light: '#E9DB5D',
-        //     dark: '#A29415',
-        //     contrastText: '#8E94A4',
-        // },
+       
         info:{
             main:'#FBFBFB'
         }
@@ -77,7 +45,7 @@ export const theme = createTheme({
     breakpoints: {
         values: {
             xs: 0,
-            sm: 600,
+            sm: 800,
             md: 900,
             lg: 1200,
             xl: 1536,
@@ -86,16 +54,6 @@ export const theme = createTheme({
     },
     components: {
 
-
-        // MuiContainer: {
-        //     styleOverrides: {
-        //         root: {
-        //             maxWidth: '1500px',
-
-        //         },
-        //     },
-
-        // },
         MuiTypography: {
             styleOverrides: {
                 root: {
@@ -121,51 +79,6 @@ export const theme = createTheme({
                 },
             },
         },
-        // MuiCssBaseline: {
-        //     styleOverrides: {
-        //         body: {
-        //             scrollbarColor: "#1F2128 #353842",
-        //             "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-        //                 backgroundColor: "#353842",
-        //                 borderRadius: '10px'
-        //             },
-        //             "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-        //                 borderRadius: 8,
-        //                 backgroundColor: "#1F2128",
-        //                 minHeight: 24,
-        //                 border: "3px solid #353842",
-        //             },
-        //             "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
-        //                 backgroundColor: "#959595",
-        //             },
-        //             "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
-        //                 backgroundColor: "#959595",
-        //             },
-        //             "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
-        //                 backgroundColor: "#959595",
-        //             },
-        //             "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-        //                 backgroundColor: "#353842",
-        //             },
-
-        //         },
-        //     },
-        // },
-
-        // MuiPaper: {
-        //   styleOverrides: {
-        //     root: {
-        //       '&.MuiMenu-paper': {
-        //         backgroundColor: '#1F2128',
-        //       }
-        //     }
-        //   },
-        // },
-
-
+       
     },
-
-    // typography:{
-    //   fontSize:'18p'
-    // }
 });
