@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, FormHelperText} from "@mui/material";
+import { Alert, Box, Button, Container, FormControl, FormHelperText } from "@mui/material";
 import { boxBtns, containerForm, formControl, formSection } from "./styles";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { useEffect } from "react";
@@ -6,6 +6,7 @@ import { Field, Form, Formik } from "formik";
 import { v4 as uuidv4 } from 'uuid';
 import { changeNote, newNoteFetch } from "../../redux/slices/editNotesSLice";
 import { useNavigate } from "react-router-dom";
+import { AlertUpdate } from "./AlertUpdate";
 
 
 interface valueData {
@@ -31,7 +32,6 @@ export function EditPage() {
             return navigate("*");
         }
     }, [editNoteData.error]);
-
 
     function validateValue(value: string) {
         if (value.trim() === '') {
@@ -95,6 +95,9 @@ export function EditPage() {
                             <Button variant="contained" type="submit">New Note</Button>
                         </Box>
 
+                        
+                        <AlertUpdate props={{status:editNoteData.status}}></AlertUpdate>
+                        
 
                     </Container>
 
